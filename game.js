@@ -5,7 +5,7 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-const startScreen = document.getElementById('startScreen');
+// startScreen is declared in auth.js
 const gameOverScreen = document.getElementById('gameOverScreen');
 const startBtn = document.getElementById('startBtn');
 const restartBtn = document.getElementById('restartBtn');

@@ -22,3 +22,7 @@ CREATE POLICY "Users can create their own profile"
 CREATE POLICY "Users can update their own profile"
   ON profiles FOR UPDATE
   USING (auth.uid() = id);
+
+-- Grant API access
+GRANT SELECT ON public.profiles TO anon, authenticated;
+GRANT INSERT, UPDATE ON public.profiles TO authenticated;

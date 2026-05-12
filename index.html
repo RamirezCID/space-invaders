@@ -12,10 +12,46 @@
         <div class="canvas-wrapper">
             <canvas id="gameCanvas" width="800" height="600"></canvas>
             <div id="startScreen" class="overlay">
-                <h2>Space Invaders</h2>
-                <p>Defend Earth from the alien invasion!</p>
-                <button id="startBtn">Start Game</button>
-                <p class="controls-hint">Arrow Keys / WASD to move &bull; Space to shoot</p>
+                <!-- Main start view -->
+                <div id="startMain">
+                    <h2>Space Invaders</h2>
+                    <p id="authWelcome" class="hidden"></p>
+                    <p class="tagline">Defend Earth from the alien invasion!</p>
+                    <button id="startBtn">Start Game</button>
+                    <div id="authButtons">
+                        <button id="showRegisterBtn" class="btn-secondary" onclick="showRegisterForm()">Register</button>
+                        <button id="showLoginBtn" class="btn-secondary" onclick="showLoginForm()">Log In</button>
+                    </div>
+                    <button id="logoutBtn" class="btn-link hidden" onclick="handleLogout()">Log Out</button>
+                    <p class="controls-hint">Arrow Keys / WASD to move &bull; Space to shoot</p>
+                </div>
+
+                <!-- Registration form -->
+                <div id="registerForm" class="auth-form hidden">
+                    <h2>Create Account</h2>
+                    <p class="form-error hidden"></p>
+                    <form onsubmit="handleRegister(event)">
+                        <input type="text" id="regUsername" placeholder="Username" autocomplete="username" required>
+                        <input type="email" id="regEmail" placeholder="Email" autocomplete="email" required>
+                        <input type="password" id="regPassword" placeholder="Password" autocomplete="new-password" required>
+                        <button type="submit">Create Account</button>
+                    </form>
+                    <p class="form-switch">Already have an account? <a href="#" onclick="showLoginForm(); return false;">Log in</a></p>
+                    <a href="#" class="btn-link" onclick="showStartMain(); return false;">Back</a>
+                </div>
+
+                <!-- Login form -->
+                <div id="loginForm" class="auth-form hidden">
+                    <h2>Log In</h2>
+                    <p class="form-error hidden"></p>
+                    <form onsubmit="handleLogin(event)">
+                        <input type="email" id="loginEmail" placeholder="Email" autocomplete="email" required>
+                        <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password" required>
+                        <button type="submit">Log In</button>
+                    </form>
+                    <p class="form-switch">Don't have an account? <a href="#" onclick="showRegisterForm(); return false;">Register</a></p>
+                    <a href="#" class="btn-link" onclick="showStartMain(); return false;">Back</a>
+                </div>
             </div>
             <div id="gameOverScreen" class="overlay hidden">
                 <h2>Game Over</h2>
@@ -24,7 +60,9 @@
             </div>
         </div>
     </div>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script src="config.js"></script>
+    <script src="auth.js"></script>
     <script src="game.js"></script>
 </body>
 </html>

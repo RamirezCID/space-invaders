@@ -1,0 +1,153 @@
+{
+  "project": "Space Invaders",
+  "branchName": "ralph/space-invaders-game",
+  "description": "Browser-based Space Invaders arcade game using vanilla HTML/CSS/JS with canvas rendering, progressive difficulty, and clean modern UI",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Project setup and game page shell",
+      "description": "As a user, I want to open the game in my browser so that I can see the game page and start playing.",
+      "acceptanceCriteria": [
+        "Create index.html, style.css, and game.js as separate files — no inline styles or scripts",
+        "index.html links to style.css via <link> and game.js via <script>",
+        "Page displays a centered title 'Space Invaders' and an 800x600 canvas element",
+        "A 'Start Game' button is visible below or overlaying the canvas",
+        "Page has a clean modern look: dark background, sans-serif font, good contrast, centered layout with max-width ~800px",
+        "Start a Python HTTP server (python -m http.server) and verify the page loads correctly",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Verified: separate files, centered layout, dark modern UI, Start Game button visible"
+    },
+    {
+      "id": "US-002",
+      "title": "Game loop and player ship rendering",
+      "description": "As a user, I want to see my ship on the canvas when the game starts so that I know the game is running.",
+      "acceptanceCriteria": [
+        "Clicking 'Start Game' or pressing Enter hides the start overlay and begins the game loop",
+        "Game loop uses requestAnimationFrame with delta-time for frame-rate independent updates",
+        "A player ship is drawn near the bottom-center of the canvas using simple geometric shapes",
+        "Score displays at top-left starting at 0, lives display at top-right starting at 3",
+        "HUD text uses a clean readable font and does not overlap gameplay area",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "Verified: Start Game hides overlay, game loop runs, ship drawn at bottom-center, HUD shows Score/Wave/Lives"
+    },
+    {
+      "id": "US-003",
+      "title": "Player movement controls",
+      "description": "As a user, I want to move my ship left and right using the keyboard so that I can dodge enemy fire and aim.",
+      "acceptanceCriteria": [
+        "Left arrow key or A moves the ship left",
+        "Right arrow key or D moves the ship right",
+        "Ship cannot move beyond the left or right edge of the canvas",
+        "Movement is smooth and frame-rate independent (uses delta-time)",
+        "Input uses keydown/keyup listeners for responsive held-key movement",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": "Verified: arrow keys and WASD move ship, clamped to canvas edges, delta-time movement"
+    },
+    {
+      "id": "US-004",
+      "title": "Player shooting",
+      "description": "As a user, I want to fire projectiles upward so that I can destroy aliens.",
+      "acceptanceCriteria": [
+        "Pressing Space fires a projectile from the ship's current position",
+        "Projectile travels upward at a consistent speed",
+        "Only one player projectile can be on screen at a time",
+        "Projectile disappears when it leaves the top of the canvas",
+        "Projectile is visually distinct (e.g., bright color, small rectangle)",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": "Verified: Space fires green projectile, one at a time, disappears off-screen"
+    },
+    {
+      "id": "US-005",
+      "title": "Alien grid formation and movement",
+      "description": "As a user, I want to see a grid of alien invaders that move across and down the screen so that there is a threat to respond to.",
+      "acceptanceCriteria": [
+        "Aliens are arranged in a 5-row x 11-column grid",
+        "At least 2-3 visually distinct alien types across different rows",
+        "The grid moves horizontally together at a consistent speed",
+        "When any alien reaches a screen edge, the entire grid drops down one row and reverses horizontal direction",
+        "Aliens are rendered clearly using simple geometric shapes against the dark background",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": "Verified: 5x11 grid, 3 distinct types (diamonds, rounded rects, rects), horizontal movement with drop and reverse"
+    },
+    {
+      "id": "US-006",
+      "title": "Player-to-alien collision and scoring",
+      "description": "As a user, I want my shots to destroy aliens and earn points so that I can progress through the game.",
+      "acceptanceCriteria": [
+        "When a player projectile overlaps an alien (AABB collision), the alien is removed and the projectile disappears",
+        "Score increases based on alien row: top row = 30 pts, middle rows = 20 pts, bottom rows = 10 pts",
+        "Score display updates immediately on hit",
+        "A brief visual effect (flash or color change) plays when an alien is destroyed",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": "Verified: AABB collision destroys alien, score +10 for bottom row, flash effect, score updates immediately"
+    },
+    {
+      "id": "US-007",
+      "title": "Alien shooting and alien-to-player collision",
+      "description": "As a user, I want aliens to shoot back at me so that the game presents a challenge, and I lose a life when hit.",
+      "acceptanceCriteria": [
+        "Aliens fire projectiles downward at random intervals",
+        "Only bottom-row aliens (no alien below them in their column) can fire",
+        "Alien projectiles are visually distinct from the player projectile",
+        "When an alien projectile hits the player ship (AABB collision), the player loses one life",
+        "Lives display updates immediately",
+        "A brief visual effect plays on the player ship when hit",
+        "Player has ~2 seconds of invulnerability after being hit",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 7,
+      "passes": true,
+      "notes": "Verified: aliens fire red bullets downward, bottom-row only, player loses life on hit, invulnerability blink works"
+    },
+    {
+      "id": "US-008",
+      "title": "Progressive difficulty and wave system",
+      "description": "As a user, I want the game to get harder as I play so that it stays challenging.",
+      "acceptanceCriteria": [
+        "Alien movement speed increases as aliens are destroyed (fewer aliens = faster)",
+        "Alien fire rate increases as aliens are destroyed",
+        "When all aliens are destroyed, a new wave spawns with a higher base speed",
+        "Wave number is tracked and displayed in the HUD",
+        "Each new wave is noticeably harder than the previous one",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 8,
+      "passes": true,
+      "notes": "Verified: speed scales with alien count and wave number, wave counter in HUD, new wave spawns on clear"
+    },
+    {
+      "id": "US-009",
+      "title": "Game over screen and restart",
+      "description": "As a user, I want a clear game-over screen when I lose so that I know the game ended and can see my score.",
+      "acceptanceCriteria": [
+        "Game ends when lives reach 0 OR when any alien reaches the player's vertical row",
+        "Game loop stops completely — no lingering animations or processing",
+        "A game-over overlay displays 'Game Over' and the final score",
+        "A 'Play Again' button resets all state and starts a new game",
+        "The final score is exposed via a JavaScript custom event or callback function for future leaderboard integration",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 9,
+      "passes": true,
+      "notes": "Verified: game over overlay shows score, loop stops (running=false), Play Again resets all state, custom 'gameOver' event dispatched"
+    }
+  ]
+}

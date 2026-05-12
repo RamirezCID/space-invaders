@@ -24,3 +24,7 @@ CREATE POLICY "Scores are publicly readable"
 CREATE POLICY "Players can insert their own scores"
   ON scores FOR INSERT
   WITH CHECK (auth.uid() = player_id);
+
+-- Grant API access
+GRANT SELECT ON public.scores TO anon, authenticated;
+GRANT INSERT ON public.scores TO authenticated;
