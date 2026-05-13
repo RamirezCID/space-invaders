@@ -133,6 +133,12 @@ function gameOver() {
     finalScoreEl.textContent = state.score;
     gameOverScreen.classList.remove('hidden');
 
+    // Show/hide logout or sign-in button based on auth state
+    const goLogout = document.getElementById('gameOverLogoutBtn');
+    const goSignIn = document.getElementById('gameOverSignInBtn');
+    if (goLogout) goLogout.classList.toggle('hidden', !currentUser);
+    if (goSignIn) goSignIn.classList.toggle('hidden', !!currentUser);
+
     // Expose score for future leaderboard integration
     const event = new CustomEvent('gameOver', { detail: { score: state.score, wave: state.wave } });
     document.dispatchEvent(event);

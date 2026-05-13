@@ -47,16 +47,19 @@ function updateStartScreenAuth() {
     const welcomeEl = document.getElementById('authWelcome');
     const authBtnsEl = document.getElementById('authButtons');
     const logoutBtnEl = document.getElementById('logoutBtn');
+    const gameOverLogoutBtn = document.getElementById('gameOverLogoutBtn');
 
     if (currentUser) {
         welcomeEl.textContent = `Welcome, ${currentUser.username}`;
         welcomeEl.classList.remove('hidden');
         authBtnsEl.classList.add('hidden');
         logoutBtnEl.classList.remove('hidden');
+        gameOverLogoutBtn.classList.remove('hidden');
     } else {
         welcomeEl.classList.add('hidden');
         authBtnsEl.classList.remove('hidden');
         logoutBtnEl.classList.add('hidden');
+        gameOverLogoutBtn.classList.add('hidden');
     }
 }
 
@@ -171,6 +174,18 @@ async function handleLogin(e) {
 async function handleLogout() {
     await supabaseClient.auth.signOut();
     setLoggedOutState();
+}
+
+function showGameOverLoggedOut() {
+    document.getElementById('gameOverScreen').classList.add('hidden');
+    document.getElementById('startScreen').classList.remove('hidden');
+    showStartMain();
+}
+
+function gameOverGoToSignIn() {
+    document.getElementById('gameOverScreen').classList.add('hidden');
+    document.getElementById('startScreen').classList.remove('hidden');
+    showLoginForm();
 }
 
 // --- UI Helpers ---
