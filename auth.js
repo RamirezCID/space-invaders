@@ -46,19 +46,19 @@ function setLoggedOutState() {
 function updateStartScreenAuth() {
     const welcomeEl = document.getElementById('authWelcome');
     const authBtnsEl = document.getElementById('authButtons');
-    const logoutBtnEl = document.getElementById('logoutBtn');
+    const authActionsEl = document.getElementById('authActions');
     const gameOverLogoutBtn = document.getElementById('gameOverLogoutBtn');
 
     if (currentUser) {
-        welcomeEl.textContent = `Welcome, ${currentUser.username}`;
+        welcomeEl.innerHTML = `Welcome, <a href="profile.html">${currentUser.username}</a>`;
         welcomeEl.classList.remove('hidden');
         authBtnsEl.classList.add('hidden');
-        logoutBtnEl.classList.remove('hidden');
+        authActionsEl.classList.remove('hidden');
         gameOverLogoutBtn.classList.remove('hidden');
     } else {
         welcomeEl.classList.add('hidden');
         authBtnsEl.classList.remove('hidden');
-        logoutBtnEl.classList.add('hidden');
+        authActionsEl.classList.add('hidden');
         gameOverLogoutBtn.classList.add('hidden');
     }
 }

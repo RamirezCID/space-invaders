@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Profile — Space Invaders</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="profile-container">
+        <a href="index.html" class="profile-back">&larr; Back to Game</a>
+        <h1 id="profileTitle" class="profile-title">Loading...</h1>
+
+        <!-- Stats -->
+        <div id="profileStats" class="profile-stats"></div>
+
+        <!-- Recent Games -->
+        <h2 class="profile-section-title">Recent Games</h2>
+        <div id="profileHistory" class="lb-container profile-history"></div>
+
+        <!-- Change Password -->
+        <h2 class="profile-section-title" style="margin-top: 2rem;">Change Password</h2>
+        <form id="changePasswordForm" class="auth-form profile-password-form" onsubmit="handleChangePassword(event)">
+            <p class="form-error hidden"></p>
+            <p class="form-success hidden"></p>
+            <input type="password" id="newPassword" placeholder="New password" autocomplete="new-password" required>
+            <input type="password" id="confirmPassword" placeholder="Confirm new password" autocomplete="new-password" required>
+            <button type="submit">Update Password</button>
+        </form>
+    </div>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>

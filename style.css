@@ -111,10 +111,13 @@ canvas {
 }
 
 /* Auth UI */
-#authButtons {
+#authButtons,
+#authActions {
     display: flex;
     gap: 0.75rem;
     margin-top: 0.75rem;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn-secondary {
@@ -338,8 +341,116 @@ canvas {
     text-align: center;
 }
 
-#showLeaderboardBtn {
-    margin-top: 0.5rem;
+
+/* Profile page */
+.profile-container {
+    max-width: 560px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.profile-back {
+    display: inline-block;
+    color: #6080cc;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.profile-back:hover {
+    color: #8ab0ff;
+    text-decoration: underline;
+}
+
+.profile-title {
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: #ffffff;
+    margin-bottom: 2rem;
+}
+
+.profile-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid #1a1a3a;
+    border-radius: 6px;
+    padding: 1rem 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: #707088;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.4rem;
+}
+
+.stat-value {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #4a9eff;
+    font-variant-numeric: tabular-nums;
+}
+
+.profile-section-title {
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: #a0a0b8;
+    margin-bottom: 0.75rem;
+}
+
+.profile-history {
+    max-width: 100%;
+    max-height: none;
+}
+
+.profile-password-form {
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+.profile-password-form button[type="submit"] {
+    padding: 0.75rem 2.5rem;
+    font-size: 1rem;
+    font-family: inherit;
+    background: #2a5cff;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: background 0.2s;
+    margin-top: 0.25rem;
+}
+
+.profile-password-form button[type="submit"]:hover {
+    background: #1a45d6;
+}
+
+.form-success {
+    color: #44dd66 !important;
+    font-size: 0.9rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* Auth welcome link */
+#authWelcome a {
+    color: #4a9eff;
+    text-decoration: none;
+}
+
+#authWelcome a:hover {
+    text-decoration: underline;
 }
 
 .hidden {

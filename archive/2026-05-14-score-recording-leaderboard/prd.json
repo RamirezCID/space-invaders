@@ -1,0 +1,140 @@
+{
+  "project": "Space Invaders",
+  "branchName": "ralph/score-recording-leaderboard",
+  "description": "Automatic score recording for authenticated players and global leaderboard with all-time and daily views",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Create leaderboard.js and score recording logic",
+      "description": "As an authenticated player, I want my score recorded automatically when the game ends so that I can compete on the leaderboard.",
+      "acceptanceCriteria": [
+        "Create leaderboard.js file, loaded in index.html after auth.js and before game.js",
+        "Export a recordScore(score, wave) async function that inserts into the scores table using supabaseClient with player_id from currentUser.id",
+        "Call recordScore() from gameOver() in game.js when currentUser is not null",
+        "If the insert fails, log the error to console but don't block the game over screen",
+        "Store a pendingScore variable ({ score, wave }) when currentUser is null on game over, for later save after sign-in",
+        "Clicking Play Again clears pendingScore",
+        "Verify a score row appears in Supabase scores table after an authenticated game over",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Verified in browser"
+    },
+    {
+      "id": "US-002",
+      "title": "Save pending score after guest signs in",
+      "description": "As a guest who just played, I want my score saved if I sign in from the game over screen so that my game wasn't wasted.",
+      "acceptanceCriteria": [
+        "After successful login or registration in auth.js (handleLogin and handleRegister), check if pendingScore exists",
+        "If pendingScore exists, call recordScore(pendingScore.score, pendingScore.wave) then clear pendingScore",
+        "The score is saved with the newly authenticated user's ID",
+        "If the guest clicks Play Again instead of signing in, pendingScore is cleared and no score is saved",
+        "Verify in browser: play as guest, game over, sign in, check scores table has the entry",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "Verified in browser"
+    },
+    {
+      "id": "US-003",
+      "title": "Guest prompt on game over screen",
+      "description": "As a guest, I want to see a message encouraging me to sign in to save my score, but I can skip it.",
+      "acceptanceCriteria": [
+        "When game over fires and currentUser is null, show text on the game over screen: 'Sign in to save your score to the leaderboard'",
+        "The existing Sign In button from previous work is visible below this message",
+        "The Play Again button is always visible regardless of auth state",
+        "When currentUser is not null, the prompt message is hidden",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": "Verified in browser"
+    },
+    {
+      "id": "US-004",
+      "title": "Leaderboard fetch and render function",
+      "description": "As a developer, I need a reusable function to fetch and render leaderboard data so both the start screen and game over screen can use it.",
+      "acceptanceCriteria": [
+        "Create a fetchLeaderboard(period) async function in leaderboard.js that queries the top 10 scores from the scores table joined with profiles for username",
+        "period parameter accepts 'alltime' (default) or 'daily'",
+        "For 'daily', filter scores where played_at >= start of today in UTC",
+        "Returns an array of { rank, username, score, played_at } objects sorted by score descending",
+        "Create a renderLeaderboard(containerEl, scores, currentUserId) function that renders a table/list into the given container element",
+        "Each row shows: rank number, username, score, date (formatted short like 'May 14')",
+        "If scores array is empty, render 'No scores recorded yet'",
+        "Verify fetchLeaderboard returns data by logging to console after inserting a test score"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": "Verified in browser"
+    },
+    {
+      "id": "US-005",
+      "title": "Leaderboard overlay on start screen",
+      "description": "As a user, I want to open a leaderboard from the start screen so that I can see top scores before playing.",
+      "acceptanceCriteria": [
+        "A 'Leaderboard' button is visible on the start screen alongside Start Game and auth buttons",
+        "Clicking it hides the main start screen content and shows a leaderboard view (same pattern as auth forms)",
+        "The leaderboard view contains a title 'Leaderboard', the rendered leaderboard table, and a 'Back' link",
+        "The leaderboard fetches and displays top 10 all-time scores on open",
+        "A 'Back' link returns to the main start screen",
+        "Styling matches existing dark background, sans-serif font, clean modern look",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": "Verified in browser"
+    },
+    {
+      "id": "US-006",
+      "title": "Leaderboard on game over screen",
+      "description": "As a player, I want to see the leaderboard on the game over screen so that I can immediately see how I rank.",
+      "acceptanceCriteria": [
+        "The game over screen includes a leaderboard container below the Play Again button and auth buttons",
+        "When the game over screen appears, fetchLeaderboard('alltime') is called and the result is rendered into the container",
+        "The leaderboard shows top 10 scores with rank, username, score, and date",
+        "If there are no scores, shows 'No scores recorded yet'",
+        "The leaderboard is compact and doesn't overflow the game over overlay — use max-height with scroll if needed",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": "Verified in browser"
+    },
+    {
+      "id": "US-007",
+      "title": "All-time and daily toggle",
+      "description": "As a user, I want to switch between all-time and daily leaderboard views so that I can see who is performing best today.",
+      "acceptanceCriteria": [
+        "A toggle with two buttons/tabs ('All Time' and 'Today') is visible above the leaderboard on both start screen and game over screen",
+        "'All Time' is selected by default with a visually active state (e.g., underline or background highlight)",
+        "Clicking 'Today' re-fetches with fetchLeaderboard('daily') and re-renders the leaderboard",
+        "Clicking 'All Time' re-fetches with fetchLeaderboard('alltime') and re-renders",
+        "Both views rank scores highest to lowest",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 7,
+      "passes": true,
+      "notes": "Verified in browser"
+    },
+    {
+      "id": "US-008",
+      "title": "Highlight current player and show rank outside top 10",
+      "description": "As an authenticated player, I want my best score highlighted and my rank shown even if I'm not in the top 10.",
+      "acceptanceCriteria": [
+        "If the current player has a score in the top 10, their row has a distinct visual highlight (e.g., subtle blue background or left border using #4a9eff)",
+        "If the current player is NOT in the top 10 but has scores, fetch their best score and rank separately",
+        "Player rank = count of distinct higher scores + 1",
+        "Display an additional row at the bottom of the leaderboard, separated by a '...' divider row, showing the player's rank, username, score, and date",
+        "If the player has no scores, no extra row is shown",
+        "Works on both start screen and game over leaderboard views, respecting the current alltime/daily toggle",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 8,
+      "passes": true,
+      "notes": "Verified in browser"
+    }
+  ]
+}
