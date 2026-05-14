@@ -1,21 +1,18 @@
 {
   "project": "Space Invaders",
-  "branchName": "ralph/player-profile",
-  "description": "Player profile page with personal stats and score history accessible by clicking username",
+  "branchName": "ralph/mobile-support",
+  "description": "Mobile device support with responsive canvas scaling, on-screen touch controls, and touch-friendly UI",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Create profile.html page shell with auth check",
-      "description": "As a player, I want a dedicated profile page so that I can view my personal stats and history.",
+      "title": "Responsive canvas scaling",
+      "description": "As a mobile user, I want the game to fit my screen so that I can see the full play area without scrolling.",
       "acceptanceCriteria": [
-        "Create profile.html that loads style.css, Supabase CDN (unpkg), config.js, and a new profile.js",
-        "Page has the same dark background (#0a0a1a) and centered layout as the game page",
-        "Page displays a centered title area for the player's username",
-        "A 'Back to Game' link navigates back to index.html",
-        "profile.js initializes the Supabase client and checks auth via getSession()",
-        "If no session exists, redirect to index.html immediately",
-        "If session exists, fetch username from profiles table and display it as the page title",
-        "Verify in browser using dev-browser skill"
+        "Canvas element scales down to fit viewport width on screens narrower than 800px via CSS max-width: 100% and height: auto",
+        "The .canvas-wrapper and .game-container don't cause horizontal overflow on small screens",
+        "The h1 SPACE INVADERS title uses a smaller font-size on screens under 840px via media query",
+        "No horizontal scrolling on a 375px-wide viewport",
+        "Verify in browser using dev-browser skill with mobile emulation"
       ],
       "priority": 1,
       "passes": true,
@@ -23,19 +20,19 @@
     },
     {
       "id": "US-002",
-      "title": "Display player stats",
-      "description": "As a player, I want to see my key statistics so that I can track my overall performance.",
+      "title": "On-screen touch controls",
+      "description": "As a mobile user, I want on-screen buttons to move and shoot so that I can play without a keyboard.",
       "acceptanceCriteria": [
-        "Profile page shows a stats section with 5 stats: All-Time High Score, Today's High Score, Average Score, Highest Wave, Total Games Played",
-        "All-time high uses PostgREST aggregate: score.max() filtered by player_id",
-        "Today's high uses score.max() filtered by player_id and played_at >= start of today UTC",
-        "Average score uses score.avg() filtered by player_id, rounded to nearest integer",
-        "Highest wave uses wave.max() filtered by player_id",
-        "Total games uses score.count() filtered by player_id",
-        "Stats are displayed in a grid/card layout with label above and value below",
-        "Values use the blue accent color (#4a9eff)",
-        "If the player has no scores, each stat shows '—' or 0",
-        "Verify in browser using dev-browser skill"
+        "Touch control bar appears at the bottom of the viewport with left arrow, fire, and right arrow buttons",
+        "Pressing (touchstart) left/right sets keys['ArrowLeft']/keys['ArrowRight'] in the keys object",
+        "Releasing (touchend) clears the key so movement stops",
+        "Tapping fire sets keys[' '] briefly to fire a shot",
+        "Holding a direction button provides continuous movement",
+        "Buttons are at least 48x48px for comfortable tapping",
+        "Controls are semi-transparent with dark background matching game aesthetic",
+        "Controls only visible on touch devices (use @media (hover: none) and (pointer: coarse) or JS touch detection)",
+        "Controls do not appear on desktop browsers",
+        "Verify in browser using dev-browser skill with mobile emulation"
       ],
       "priority": 2,
       "passes": true,
@@ -43,32 +40,18 @@
     },
     {
       "id": "US-003",
-      "title": "Display recent score history",
-      "description": "As a player, I want to see my recent scores so that I can track my improvement over time.",
+      "title": "Touch-friendly UI and scroll prevention",
+      "description": "As a mobile user, I want the UI to be usable on a small screen and the page to not scroll while playing.",
       "acceptanceCriteria": [
-        "Profile page shows a 'Recent Games' section below the stats",
-        "Fetches last 20 scores from scores table filtered by player_id, ordered by played_at descending",
-        "Each row shows: score, wave reached, and date/time (formatted like 'May 14, 2:30 PM')",
-        "Table styling reuses the .lb-table class from style.css for consistency",
-        "If no scores exist, show 'No games played yet'",
-        "Verify in browser using dev-browser skill"
+        "CSS touch-action: manipulation on body to prevent double-tap zoom",
+        "touchmove events on canvas and touch controls call preventDefault() during gameplay to stop page scrolling",
+        "Overlay buttons (Start Game, Register, Log In, etc.) have minimum 44px height for tapping",
+        "Auth form inputs are at least 44px tall",
+        "Game over overlay is scrollable within itself if content overflows on small screens (overflow-y: auto)",
+        "Viewport meta tag is present with width=device-width, initial-scale=1.0",
+        "Verify in browser using dev-browser skill with mobile emulation"
       ],
       "priority": 3,
-      "passes": true,
-      "notes": "Verified in browser"
-    },
-    {
-      "id": "US-004",
-      "title": "Link username to profile page",
-      "description": "As a player, I want to click my username on the start screen to view my profile.",
-      "acceptanceCriteria": [
-        "The 'Welcome, [username]' text in the start screen (#authWelcome) becomes a clickable <a> link to profile.html",
-        "Link is styled with the existing blue color (#4a9eff), underline on hover",
-        "Clicking navigates to profile.html",
-        "The link only appears when the user is authenticated (existing behavior preserved)",
-        "Verify in browser using dev-browser skill"
-      ],
-      "priority": 4,
       "passes": true,
       "notes": "Verified in browser"
     }

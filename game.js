@@ -137,8 +137,10 @@ function gameOver() {
     // Show/hide auth buttons and guest prompt based on auth state
     const goLogout = document.getElementById('gameOverLogoutBtn');
     const goSignIn = document.getElementById('gameOverSignInBtn');
+    const goProfile = document.getElementById('gameOverProfileLink');
     const guestPrompt = document.getElementById('guestScorePrompt');
     if (goLogout) goLogout.classList.toggle('hidden', !currentUser);
+    if (goProfile) goProfile.classList.toggle('hidden', !currentUser);
     if (goSignIn) goSignIn.classList.toggle('hidden', !!currentUser);
     if (guestPrompt) guestPrompt.classList.toggle('hidden', !!currentUser);
 
@@ -460,3 +462,50 @@ function gameLoop(timestamp) {
 
     requestAnimationFrame(gameLoop);
 }
+
+// --- Touch Controls ---
+
+(function initTouchControls() {
+    const touchLeft = document.getElementById('touchLeft');
+    const touchRight = document.getElementById('touchRight');
+    const touchFire = document.getElementById('touchFire');
+
+    if (!touchLeft || !touchRight || !touchFire) return;
+
+    // Prevent scrolling on touch controls and canvas
+    document.getElementById('touchControls').addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+    canvas.addEventListener('touchmove', (e) => {
+        if (state && state.running) e.preventDefault();
+    }, { passive: false });
+
+    // Direction buttons
+    function bindDirection(el, key) {
+        el.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            keys[key] = true;
+        }, { passive: false });
+
+        el.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            keys[key] = false;
+        }, { passive: false });
+
+        el.addEventListener('touchcancel', () => {
+            keys[key] = false;
+        });
+    }
+
+    bindDirection(touchLeft, 'ArrowLeft');
+    bindDirection(touchRight, 'ArrowRight');
+
+    // Fire button
+    touchFire.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keys[' '] = true;
+        setTimeout(() => { keys[' '] = false; }, 100);
+    }, { passive: false });
+
+    touchFire.addEventListener('touchend', (e) => {
+        e.preventDefault();
+    }, { passive: false });
+})();
