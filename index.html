@@ -23,7 +23,19 @@
                         <button id="showLoginBtn" class="btn-secondary" onclick="showLoginForm()">Log In</button>
                     </div>
                     <button id="logoutBtn" class="btn-link hidden" onclick="handleLogout()">Log Out</button>
+                    <button id="showLeaderboardBtn" class="btn-secondary" onclick="showStartLeaderboard()">Leaderboard</button>
                     <p class="controls-hint">Arrow Keys / WASD to move &bull; Space to shoot</p>
+                </div>
+
+                <!-- Leaderboard view -->
+                <div id="startLeaderboard" class="hidden">
+                    <h2>Leaderboard</h2>
+                    <div class="lb-toggle">
+                        <button class="lb-tab active" onclick="switchStartLbTab('alltime', this)">All Time</button>
+                        <button class="lb-tab" onclick="switchStartLbTab('daily', this)">Today</button>
+                    </div>
+                    <div id="startLbContainer" class="lb-container"></div>
+                    <a href="#" class="btn-link" onclick="showStartMain(); return false;">Back</a>
                 </div>
 
                 <!-- Registration form -->
@@ -56,15 +68,22 @@
             <div id="gameOverScreen" class="overlay hidden">
                 <h2>Game Over</h2>
                 <p>Final Score: <span id="finalScore">0</span></p>
+                <p id="guestScorePrompt" class="guest-prompt hidden">Sign in to save your score to the leaderboard</p>
                 <button id="restartBtn">Play Again</button>
                 <button id="gameOverLogoutBtn" class="btn-link hidden" onclick="handleLogout(); showGameOverLoggedOut();">Log Out</button>
                 <button id="gameOverSignInBtn" class="btn-link hidden" onclick="gameOverGoToSignIn();">Sign In</button>
+                <div class="lb-toggle">
+                    <button class="lb-tab active" onclick="switchGoLbTab('alltime', this)">All Time</button>
+                    <button class="lb-tab" onclick="switchGoLbTab('daily', this)">Today</button>
+                </div>
+                <div id="goLbContainer" class="lb-container"></div>
             </div>
         </div>
     </div>
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script src="config.js"></script>
     <script src="auth.js"></script>
+    <script src="leaderboard.js"></script>
     <script src="game.js"></script>
 </body>
 </html>

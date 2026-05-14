@@ -1,0 +1,112 @@
+{
+  "project": "Space Invaders",
+  "branchName": "ralph/auth-registration-login",
+  "description": "Registration and login system using Supabase Auth with email/password, username uniqueness validation, and session persistence",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Add Supabase client library and initialization",
+      "description": "As a developer, I need the Supabase JS client available in the app so that I can call auth and database APIs.",
+      "acceptanceCriteria": [
+        "Add Supabase JS client via CDN <script> tag in index.html (https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2)",
+        "Script tag is placed before config.js and game.js",
+        "Create auth.js file that initializes a supabase client instance using SUPABASE_URL and SUPABASE_ANON_KEY from config.js",
+        "index.html loads scripts in order: supabase CDN, config.js, auth.js, game.js",
+        "No console errors on page load — supabase.auth.getSession() returns successfully",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Verified in browser"
+    },
+    {
+      "id": "US-002",
+      "title": "Registration form UI on start screen",
+      "description": "As a guest, I want to see a registration form on the start screen so that I can create an account.",
+      "acceptanceCriteria": [
+        "A 'Register' button is visible on the start screen overlay alongside the existing 'Start Game' button",
+        "Clicking 'Register' hides the main start screen content and shows a registration form",
+        "Registration form has three input fields: username, email, password",
+        "Form has a 'Create Account' submit button styled with the existing blue button style",
+        "A 'Back' link returns to the main start screen without submitting",
+        "A 'Already have an account? Log in' link is visible below the form",
+        "Form styling matches existing dark background, sans-serif font, good contrast",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "Verified in browser"
+    },
+    {
+      "id": "US-003",
+      "title": "Login form UI on start screen",
+      "description": "As a returning player, I want to see a login form so that I can access my account.",
+      "acceptanceCriteria": [
+        "A 'Log In' button is visible on the start screen overlay alongside 'Start Game' and 'Register'",
+        "Clicking 'Log In' hides the main start screen content and shows a login form",
+        "Login form has two input fields: email, password",
+        "Form has a 'Log In' submit button styled with the existing blue button style",
+        "A 'Back' link returns to the main start screen",
+        "A 'Don't have an account? Register' link is visible below the form",
+        "Clicking the 'Register' link switches to the registration form, and vice versa",
+        "Form styling matches existing dark background, sans-serif font, good contrast",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": "Verified in browser"
+    },
+    {
+      "id": "US-004",
+      "title": "Registration logic with username and email uniqueness",
+      "description": "As a guest, I want to register with a unique username and email so that I can have my own player account.",
+      "acceptanceCriteria": [
+        "Before calling signUp, the app queries the profiles table to check if the username is already taken",
+        "If username exists, the form displays 'Username is already taken' as an inline error",
+        "On submit, calls supabase.auth.signUp() with email, password, and options.data.username",
+        "If email is already registered, the form displays 'Email is already registered'",
+        "If password is too short (under 6 chars), the form displays the Supabase error message",
+        "On success, the user is logged in automatically and the start screen shows 'Welcome, [username]'",
+        "The registration form hides and the start screen returns to game-ready state",
+        "All errors display inline on the form — no browser alert() calls",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": "Verified in browser"
+    },
+    {
+      "id": "US-005",
+      "title": "Login logic",
+      "description": "As a returning player, I want to log in with my email and password so that my scores are recorded to my account.",
+      "acceptanceCriteria": [
+        "On submit, calls supabase.auth.signInWithPassword() with email and password",
+        "If credentials are invalid, the form displays 'Invalid email or password' as an inline error",
+        "On success, the login form hides and the start screen shows 'Welcome, [username]'",
+        "Username is fetched from the profiles table using the authenticated user's ID",
+        "The start screen returns to game-ready state with Start Game button visible",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": "Verified in browser"
+    },
+    {
+      "id": "US-006",
+      "title": "Auth state persistence and logout",
+      "description": "As a player, I want to stay logged in when I refresh the page and be able to log out.",
+      "acceptanceCriteria": [
+        "On page load, auth.js checks supabase.auth.getSession() for an existing session",
+        "If a session exists, the start screen shows 'Welcome, [username]' and hides Register/Log In buttons",
+        "A 'Log Out' button is visible on the start screen when the user is authenticated",
+        "Clicking 'Log Out' calls supabase.auth.signOut() and resets the start screen to unauthenticated state",
+        "After logout, the Register and Log In buttons reappear and the welcome message is hidden",
+        "The game (Start Game, canvas, gameplay) works identically whether authenticated or not",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": "Verified in browser"
+    }
+  ]
+}

@@ -109,6 +109,7 @@ function aabb(a, b) {
 function startGame() {
     startScreen.classList.add('hidden');
     gameOverScreen.classList.add('hidden');
+    clearPendingScore();
 
     state = {
         running: true,
@@ -133,13 +134,33 @@ function gameOver() {
     finalScoreEl.textContent = state.score;
     gameOverScreen.classList.remove('hidden');
 
-    // Show/hide logout or sign-in button based on auth state
+    // Show/hide auth buttons and guest prompt based on auth state
     const goLogout = document.getElementById('gameOverLogoutBtn');
     const goSignIn = document.getElementById('gameOverSignInBtn');
+    const guestPrompt = document.getElementById('guestScorePrompt');
     if (goLogout) goLogout.classList.toggle('hidden', !currentUser);
     if (goSignIn) goSignIn.classList.toggle('hidden', !!currentUser);
+    if (guestPrompt) guestPrompt.classList.toggle('hidden', !!currentUser);
 
-    // Expose score for future leaderboard integration
+    // Record score or set pending for guests, then load leaderboard
+    const goLbContainer = document.getElementById('goLbContainer');
+    const loadLb = () => {
+        if (goLbContainer) {
+            loadLeaderboard(goLbContainer, 'alltime');
+            const tabs = document.querySelectorAll('#gameOverScreen .lb-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            if (tabs[0]) tabs[0].classList.add('active');
+        }
+    };
+
+    if (currentUser) {
+        recordScore(state.score, state.wave).then(loadLb);
+    } else {
+        setPendingScore(state.score, state.wave);
+        loadLb();
+    }
+
+    // Expose score event
     const event = new CustomEvent('gameOver', { detail: { score: state.score, wave: state.wave } });
     document.dispatchEvent(event);
 }

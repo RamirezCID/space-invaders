@@ -131,6 +131,7 @@ async function handleRegister(e) {
 
     // Success — user is logged in automatically
     await setLoggedInState(data.user);
+    await savePendingScore();
     showStartMain();
 }
 
@@ -166,6 +167,7 @@ async function handleLogin(e) {
     }
 
     await setLoggedInState(data.user);
+    await savePendingScore();
     showStartMain();
 }
 
@@ -194,6 +196,7 @@ function showStartMain() {
     document.getElementById('startMain').classList.remove('hidden');
     document.getElementById('registerForm').classList.add('hidden');
     document.getElementById('loginForm').classList.add('hidden');
+    document.getElementById('startLeaderboard').classList.add('hidden');
 }
 
 function showFormError(formId, message) {

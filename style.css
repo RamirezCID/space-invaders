@@ -222,6 +222,126 @@ canvas {
     color: #8ab0ff;
 }
 
+/* Guest prompt */
+.guest-prompt {
+    color: #ffaa22 !important;
+    font-size: 0.9rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* Leaderboard */
+.lb-toggle {
+    display: flex;
+    gap: 0;
+    justify-content: center;
+    margin: 0.75rem 0 0.5rem;
+}
+
+.lb-tab {
+    padding: 0.4rem 1.2rem !important;
+    font-size: 0.85rem !important;
+    background: transparent !important;
+    border: 1px solid #2a2a4a !important;
+    color: #707088 !important;
+    cursor: pointer;
+}
+
+.lb-tab:first-child {
+    border-radius: 4px 0 0 4px !important;
+}
+
+.lb-tab:last-child {
+    border-radius: 0 4px 4px 0 !important;
+    border-left: none !important;
+}
+
+.lb-tab.active {
+    background: #2a5cff !important;
+    border-color: #2a5cff !important;
+    color: #ffffff !important;
+}
+
+.lb-container {
+    width: 100%;
+    max-width: 420px;
+    max-height: 280px;
+    overflow-y: auto;
+    margin: 0 auto;
+}
+
+.lb-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.lb-table th,
+.lb-table td {
+    padding: 0.3rem 0.5rem;
+    text-align: left;
+}
+
+.lb-table th {
+    color: #707088;
+    font-weight: 400;
+    border-bottom: 1px solid #1a1a3a;
+}
+
+.lb-table th:first-child,
+.lb-table td:first-child {
+    text-align: center;
+    width: 2rem;
+}
+
+.lb-table th:nth-child(3),
+.lb-table td:nth-child(3) {
+    text-align: right;
+}
+
+.lb-table th:nth-child(4),
+.lb-table td:nth-child(4) {
+    text-align: right;
+}
+
+.lb-table td {
+    color: #c0c0d0;
+}
+
+.lb-table tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.lb-table .lb-highlight {
+    background: rgba(74, 158, 255, 0.12) !important;
+    border-left: 2px solid #4a9eff;
+}
+
+.lb-table .lb-divider td {
+    color: #505068;
+    text-align: center;
+    padding: 0.15rem 0;
+    border: none;
+}
+
+.lb-empty,
+.lb-loading {
+    color: #606078 !important;
+    font-size: 0.9rem !important;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+#startLeaderboard {
+    width: 100%;
+    max-width: 460px;
+    text-align: center;
+}
+
+#showLeaderboardBtn {
+    margin-top: 0.5rem;
+}
+
 .hidden {
     display: none !important;
 }
