@@ -2,6 +2,11 @@
 // Space Invaders — game.js
 // ============================================================
 
+// Detect touch support and add class to body
+if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+    document.body.classList.add('has-touch');
+}
+
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 

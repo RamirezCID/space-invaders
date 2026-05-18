@@ -477,12 +477,17 @@ canvas {
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 1.5rem;
     justify-content: space-between;
     align-items: center;
     z-index: 100;
     background: rgba(10, 10, 26, 0.85);
     border-top: 1px solid #1a1a3a;
+}
+
+.touch-group-left {
+    display: flex;
+    gap: 0.75rem;
 }
 
 .touch-btn {
@@ -513,15 +518,13 @@ canvas {
     border-color: rgba(74, 158, 255, 0.4);
 }
 
-/* Show touch controls on touch devices */
-@media (hover: none) and (pointer: coarse) {
-    .touch-controls {
-        display: flex;
-    }
+/* Show touch controls via JS-added class (more reliable than media query) */
+body.has-touch .touch-controls {
+    display: flex;
+}
 
-    body {
-        padding-bottom: 90px;
-    }
+body.has-touch {
+    padding-bottom: 90px;
 }
 
 /* Mobile responsive */

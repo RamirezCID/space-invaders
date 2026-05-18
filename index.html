@@ -87,11 +87,13 @@
             </div>
         </div>
     </div>
-    <!-- Touch controls (visible only on touch devices via CSS) -->
+    <!-- Touch controls (visible only on touch devices via JS) -->
     <div class="touch-controls" id="touchControls">
-        <div class="touch-btn" id="touchLeft">&#9664;</div>
+        <div class="touch-group-left">
+            <div class="touch-btn" id="touchLeft">&#9664;</div>
+            <div class="touch-btn" id="touchRight">&#9654;</div>
+        </div>
         <div class="touch-btn touch-btn-fire" id="touchFire">&#9679;</div>
-        <div class="touch-btn" id="touchRight">&#9654;</div>
     </div>
 
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
